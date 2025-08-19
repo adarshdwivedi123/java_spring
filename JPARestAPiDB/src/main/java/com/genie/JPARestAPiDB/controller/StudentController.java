@@ -18,6 +18,7 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student){
         return service.saveStudent(student);
     }
+
     @GetMapping("/all")
     public List<Student>getAllStudents()
     {
