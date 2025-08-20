@@ -3,9 +3,12 @@ package com.genie.JPARestAPiDB.controller;
 import com.genie.JPARestAPiDB.entity.Student;
 import com.genie.JPARestAPiDB.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -53,4 +56,16 @@ public class StudentController {
         Student updatedStudent = service.updateStudent(id,student);
         return  updatedStudent;
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable Integer id) {
+        try {
+            service.deleteStudent(id);
+            return ResponseEntity.ok("Student deleted successfully");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+
 }
